@@ -1,0 +1,3 @@
+<div class="notes">{% for note in site.posts limit: include.limit %}
+<article class="note-row"><time datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: '%b %Y' }}</time><div><h3><a href="{{ note.url | relative_url }}">{{ note.title }}</a></h3><p>{{ note.description }}</p></div></article>
+{% endfor %}</div>

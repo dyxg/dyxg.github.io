@@ -1,0 +1,33 @@
+---
+layout: none
+---
+<article class="paper">
+{% if entry.preview and page.publication_timeline != true %}<a class="thumbnail" tabindex="-1" aria-hidden="true" href="{{ entry.url }}"><img src="{{ entry.preview | prepend: '/assets/img/' | relative_url }}" alt="" loading="lazy"></a>{% endif %}
+<div class="paper-body">
+<h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3>
+{% assign venue = entry.booktitle | default: entry.journal | default: 'Preprint' %}
+<p class="venue">{% if page.publication_timeline and entry.shortvenue %}<abbr title="{{ venue | escape }}">{{ entry.shortvenue }}</abbr>{% else %}{{ venue }}{% endif %} · {{ entry.year }}</p>
+<div class="authors">
+{%- assign names = entry.author_array -%}
+{%- assign cofirst = entry.cofirst | default: 0 | plus: 0 -%}
+{%- assign visible = names.size -%}
+{%- if names.size > 12 -%}{%- assign visible = cofirst | at_least: 7 -%}{%- endif -%}
+{%- for author in names limit: visible -%}{% unless forloop.first %}, {% endunless %}{% include author.html %}{%- endfor -%}
+{%- if names.size > visible -%}
+  {%- if page.publication_timeline -%}
+    , <details class="additional-authors"><summary>{{ names.size | minus: visible }} more authors</summary>
+    {%- for author in names -%}{%- if forloop.index > visible -%}{% include author.html %}{% unless forloop.last %}, {% endunless %}{%- endif -%}{%- endfor -%}
+    </details>
+  {%- else -%}, et al.{%- endif -%}
+{%- endif -%}
+</div>
+{% unless page.publication_timeline %}
+{% if entry.summary %}<p class="summary">{{ entry.summary }}</p>{% endif %}
+{% endunless %}
+<div class="paper-links">
+  <a href="{{ entry.url }}">Paper</a>
+  {% if entry.code %}<a href="{{ entry.code }}">Code</a>{% endif %}
+  {% if entry.slides %}<a href="{{ entry.slides }}">Slides</a>{% endif %}
+  {% if entry.website %}<a href="{{ entry.website }}">{% if page.publication_timeline %}Website{% else %}Project{% endif %}</a>{% endif %}
+</div>
+</div></article>

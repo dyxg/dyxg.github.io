@@ -1,0 +1,44 @@
+---
+layout: default
+---
+{% assign person = site.data.profile %}
+<section class="hero">
+<div class="portrait">
+{% if person.portrait %}
+<img class="avatar" src="{{ person.portrait | relative_url }}" width="256" height="256" alt="{{ person.name | escape }}">
+{% else %}
+<div class="avatar portrait-placeholder" aria-hidden="true">XZ</div>
+{% endif %}
+<div class="contact-links" role="group" aria-label="Contact and profiles">
+{% if person.email %}
+<a id="email-link" aria-label="Email" title="Email" hidden>{% include contact-icon.html icon="envelope" %}</a>
+<script>
+  const emailLink = document.getElementById('email-link');
+  const reversedAddress = {{ person.email | split: '' | reverse | join: '' | jsonify }};
+  emailLink.href = 'mailto:' + [...reversedAddress].reverse().join('');
+  emailLink.hidden = false;
+</script>
+{% endif %}
+{% if person.scholar %}<a href="{{ person.scholar }}" aria-label="Google Scholar" title="Google Scholar">{% include contact-icon.html icon="mortarboard-fill" %}</a>{% endif %}
+{% if person.github %}<a href="{{ person.github }}" aria-label="GitHub" title="GitHub">{% include contact-icon.html icon="github" %}</a>{% endif %}
+{% if person.x %}<a href="{{ person.x }}" aria-label="X" title="X">{% include contact-icon.html icon="twitter-x" %}</a>{% endif %}
+{% if person.linkedin %}<a href="{{ person.linkedin }}" aria-label="LinkedIn" title="LinkedIn">{% include contact-icon.html icon="linkedin" %}</a>{% endif %}
+</div></div>
+<div class="intro">
+<h1>{{ person.name }}</h1>
+<div class="bio">{{ content }}</div>
+</div>
+</section>
+{% for section in site.data.sections %}
+<section class="section" id="{{ section.id }}">
+<div class="section-head"><h2>{{ section.title }}</h2>{% if section.url %}<a href="{{ section.url | relative_url }}">{{ section.link_label }}</a>{% endif %}</div>
+{% include {{ section.include }} limit=section.limit %}
+</section>
+{% endfor %}
+{% assign extra_sections = site.sections | sort: 'order' %}
+{% for module in extra_sections %}
+<section class="section" id="{{ module.title | slugify }}">
+<h2>{{ module.title | escape }}</h2>
+{{ module.content | markdownify }}
+</section>
+{% endfor %}

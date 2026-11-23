@@ -1,0 +1,6 @@
+<p class="author-key">* Equal contribution (co-first authors) · † Project lead</p>
+{% if include.all %}
+  <div class="publication-timeline">{% bibliography %}</div>
+{% else %}
+  {% include selected_papers.liquid %}
+{% endif %}

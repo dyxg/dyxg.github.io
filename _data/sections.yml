@@ -1,0 +1,5 @@
+- id: research
+  title: Selected research
+  include: paper-list.html
+  url: /publications/
+  link_label: All publications

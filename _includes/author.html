@@ -1,0 +1,4 @@
+{%- capture full_name -%}{{ author.first }} {{ author.last }}{%- endcapture -%}
+{%- if site.scholar.first_name contains author.first and site.scholar.last_name contains author.last -%}<strong>{{ full_name | escape }}</strong>{%- else -%}{{ full_name | escape }}{%- endif -%}
+{%- if forloop.index <= cofirst -%}<sup>*</sup>{%- endif -%}
+{%- if entry.project_lead == full_name -%}<sup>†</sup>{%- endif -%}

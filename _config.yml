@@ -1,0 +1,38 @@
+title: Xuanyi Zhou
+first_name: Xuanyi
+last_name: Zhou
+lang: en
+url: https://dyxg.github.io
+baseurl: ""
+description: Research on language model post-training, efficient video generation, and code agent evaluation.
+theme: al_folio_core
+plugins: [al_folio_core, jekyll-scholar]
+include: [_pages]
+exclude: [README.md, LICENSE, Gemfile, Gemfile.lock, vendor, dist]
+destination: dist
+permalink: /writing/:title/
+timezone: Asia/Shanghai
+scholar:
+  source: ./_bibliography
+  bibliography: papers.bib
+  bibliography_template: paper
+  sort_by: none
+  group_by: none
+  first_name: [Xuanyi]
+  last_name: [Zhou]
+defaults:
+  - scope: {path: "", type: posts}
+    values: {layout: note}
+collections:
+  sections:
+    output: false
+al_folio:
+  api_version: 1
+  style_engine: tailwind
+  tailwind:
+    version: 4.1.18
+    preflight: false
+    css_entry: assets/tailwind/app.css
+  distill:
+    engine: distillpub-template
+    source: al-org-dev/distill-template#al-folio
